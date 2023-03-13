@@ -16,65 +16,65 @@ public:
 
     void stop();
 
-    // ÉèÖÃÁ÷Ã½ÌåÍø¹ØµØÖ·
+    // è®¾ç½®æµåª’ä½“ç½‘å…³åœ°å€
     void set_gateway_addr(const char *ip, const int port);
 
-    // ÉèÖÃ½ÓÊÕyuv¼Óµ÷
+    // è®¾ç½®æ¥æ”¶rgb24å›è°ƒ
     typedef void (*recv_host_rgb24_to_np_cb)(flv_client *ctx, int error);
     typedef void (*recv_host_rgb24_cb)(flv_client *ctx, int64_t buf, int size, int error);
     typedef void (*recv_device_rgb24_cb)(flv_client *ctx, int64_t buf, int size, int error);
-    // ÉèÖÃ½ÓÊÕRGB24º¯ÊıÖ¸Õë
+    // è®¾ç½®æ¥æ”¶RGB24å‡½æ•°æŒ‡é’ˆ
     void set_output_callbacks(recv_host_rgb24_to_np_cb recv_host_to_np, recv_host_rgb24_cb recv_host, recv_device_rgb24_cb recv_device);
-    // ÊÍ·Ådevice/hostÖ¸Õë
+    // é‡Šæ”¾device/hostæŒ‡é’ˆ
     void free_output_buf(uint8_t *buf);
 
-    // ÇëÇóÁ÷ĞÅÏ¢
+    // è¯·æ±‚æµä¿¡æ¯
     void request_stream_info();
-    // ½ÓÊÕÁ÷ĞÅÏ¢
+    // æ¥æ”¶æµä¿¡æ¯
     static void receive_stream_info_success(void *ctx);
     static void receive_stream_info_fail(void *ctx, ssize_t code);
 
-    // ÇëÇóÁ÷±£»î
+    // è¯·æ±‚æµä¿æ´»
     void request_stream_keep_alive();
-    // ½ÓÊÕÁ÷±£»î
+    // æ¥æ”¶æµä¿æ´»
     static void receive_stream_keep_alive_success(void *ctx);
     static void receive_stream_keep_alive_fail(void *ctx, ssize_t code);
 
-    // ÇëÇóÁ÷¹Ø±Õ
+    // è¯·æ±‚æµå…³é—­
     void request_stream_close();
-    // ½ÓÊÕÁ÷¹Ø±Õ
+    // æ¥æ”¶æµå…³é—­
     static void receive_stream_close_success(void *ctx);
     static void receive_stream_close_fail(void *ctx, ssize_t code);
 
-    // ÇëÇóÁ÷ÄÚÈİ
+    // è¯·æ±‚æµå†…å®¹
     void request_stream_content();
-    // ½ÓÊÕflvÁ÷²¢½âÎöºÍ»º³å
+    // æ¥æ”¶flvæµå¹¶è§£æå’Œç¼“å†²
     static void receive_stream_content_success(void *ctx, uint8_t *ptr, ssize_t count);
     static void receive_stream_content_fail(void *ctx, ssize_t code);
     static void receive_stream_content_eof(void *ctx);
 
-    // ÉèÖÃÁ÷ĞÅÏ¢
+    // è®¾ç½®æµä¿¡æ¯
     void set_stream_info(const int id, const std::string ip, const int port, const std::string path, const std::string query);
 
-    // ·¢ÆğÁ÷ÇëÇó
+    // å‘èµ·æµè¯·æ±‚
     void connect_stream();
     void connect_stream(std::string gbcode);
 
-    // ¶Ï¿ªÁ÷ÇëÇó
+    // æ–­å¼€æµè¯·æ±‚
     void disconnect_stream(async_http_client::req_params_t *params, bool close);
 
-    // ÖØĞÂ·¢ÆğÁ÷ÇëÇó
+    // é‡æ–°å‘èµ·æµè¯·æ±‚
     void reconnect_stream(async_http_client::req_params_t *params, bool close = false);
 
-    // Á÷±£»î
+    // æµä¿æ´»
     void start_stream_keepalive();
     void stop_stream_keepalive();
 
-    // Á÷×´Ì¬¼ì²â
+    // æµçŠ¶æ€æ£€æµ‹
     void start_stream_status_checker();
     void stop_stream_status_checker();
 
-    // ½âÎöesÁ÷²¢ËÍ½âÂë
+    // è§£æesæµå¹¶é€è§£ç 
     int receive_elementary_stream(void *ctx, char *input_buf, unsigned int len);
 
 
@@ -87,30 +87,30 @@ protected:
     // video decoder
     ffmpeg_hw_decoder m_decoder;
 
-    // Á÷Ã½ÌåÍø¹Ø
+    // æµåª’ä½“ç½‘å…³
     std::string m_gateway_ip;
     int m_gateway_port;
 
-    // µãÎ»¹ú±êÂë
+    // ç‚¹ä½å›½æ ‡ç 
     std::string m_gbcode;
 
-    // À­Á÷ÅäÖÃ
+    // æ‹‰æµé…ç½®
     std::string m_stream_ip;
     int m_stream_port;
     int m_stream_id;
     std::string m_stream_path;
     std::string m_stream_query;
 
-    // »·ĞÎ»º³å
+    // ç¯å½¢ç¼“å†²
     uint8_t *m_flv_ring_buffer;
     uint32_t m_flv_ring_buffer_length;
     uint32_t m_flv_ring_buffer_write_offset;
 
-    // Ö¡»º³å
+    // å¸§ç¼“å†²
     uint32_t m_frame_buffer_length;
     uint8_t *m_frame_buffer;
 
-    // ±êÖ¾
+    // æ ‡å¿—
     bool m_need_search_i_frame;
     bool m_found_flv_header;
     bool m_need_search_magic;
@@ -137,7 +137,7 @@ protected:
     uv_timer_t m_stream_keepalive_timer;
     uv_timer_t m_stream_status_check_timer;
 
-    // Êä³ö»Øµ÷
+    // è¾“å‡ºå›è°ƒ
     recv_host_rgb24_to_np_cb m_recv_host_rgb24_to_np_cb;
     recv_host_rgb24_cb m_recv_host_rgb24_cb;
     recv_device_rgb24_cb m_recv_device_rgb24_cb;
